@@ -1,0 +1,71 @@
+swagger: '2.0'
+info:
+  description: API which provides the Account Summary details for a Banking Customer based on the Customer Id
+  version: 1.0.0
+  title: AccountSummary API
+  contact: {}
+host: 'cognizant.com:443'
+basePath: /api/v1/
+tags:
+  - name: Default
+    description: Default section
+schemes:
+  - https
+paths:
+  /accountsummary:
+    get:
+      tags:
+        - Default
+      summary: FetchAccountBalanceSummary
+      consumes: []
+      produces:
+        - application/json
+      parameters:
+        - name: customerid
+          in: query
+          required: true
+          type: string
+          x-example: '123456789'
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/accountsummary'
+        '500':
+          description: Error 500
+          schema:
+            $ref: '#/definitions/error'
+definitions:
+  accountsummary:
+    type: object
+    required:
+      - openingbalance
+    properties:
+      accountType:
+        type: string
+      accountnickname:
+        type: string
+      accountnumber:
+        type: string
+      accountstatus:
+        type: string
+      closingbalance:
+        type: number
+        format: double
+      hasregisteredforsocialbanking:
+        type: boolean
+        default: false
+      last4digits:
+        type: string
+      ledgerbalance:
+        type: number
+        format: double
+      openingbalance:
+        type: number
+        format: double
+  error:
+    type: object
+  status:
+    type: object
